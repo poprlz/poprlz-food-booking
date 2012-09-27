@@ -137,7 +137,7 @@
         }
 
 
-        $userAccountInstance->register_account($email,$password)
+        $userAccountInstance->register_account($email,$password);
 
         if($userAccountInstance){
             $session = Doo::session();

@@ -72,7 +72,7 @@ class UserAccountBase extends DooModel{
                 'id' => array(
                         array( 'integer' ),
                         array( 'maxlength', 20 ),
-                        array( 'notnull' ),
+                        array( 'optional' ),
                 ),
 
                 'version' => array(

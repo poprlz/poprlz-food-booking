@@ -1,7 +1,7 @@
 <?php
 Doo::loadCore('db/DooModel');
 
-class UserBase extends DooModel{
+class CatalogBase extends DooModel{
 
     /**
      * @var bigint Max length is 20.
@@ -14,29 +14,24 @@ class UserBase extends DooModel{
     public $version;
 
     /**
-     * @var varchar Max length is 50.
+     * @var bigint Max length is 20.
      */
-    public $full_name;
+    public $parent_id;
 
     /**
-     * @var datetime
+     * @var char Max length is 100.
      */
-    public $birthday;
+    public $name;
 
     /**
-     * @var int Max length is 1.
+     * @var varchar Max length is 255.
      */
-    public $gender;
+    public $description;
 
     /**
-     * @var varchar Max length is 100.
+     * @var char Max length is 200.
      */
-    public $strict_password;
-
-    /**
-     * @var varchar Max length is 100.
-     */
-    public $token;
+    public $img_path;
 
     /**
      * @var char Max length is 10.
@@ -53,9 +48,9 @@ class UserBase extends DooModel{
      */
     public $last_updated;
 
-    public $_table = 'user';
+    public $_table = 'catalog';
     public $_primarykey = 'id';
-    public $_fields = array('id','version','full_name','birthday','gender','strict_password','token','status','date_created','last_updated');
+    public $_fields = array('id','version','parent_id','name','description','img_path','status','date_created','last_updated');
 
     public function getVRules() {
         return array(
@@ -71,29 +66,24 @@ class UserBase extends DooModel{
                         array( 'notnull' ),
                 ),
 
-                'full_name' => array(
-                        array( 'maxlength', 50 ),
-                        array( 'optional' ),
-                ),
-
-                'birthday' => array(
-                        array( 'datetime' ),
-                        array( 'optional' ),
-                ),
-
-                'gender' => array(
+                'parent_id' => array(
                         array( 'integer' ),
-                        array( 'maxlength', 1 ),
+                        array( 'maxlength', 20 ),
                         array( 'optional' ),
                 ),
 
-                'strict_password' => array(
+                'name' => array(
                         array( 'maxlength', 100 ),
+                        array( 'notnull' ),
+                ),
+
+                'description' => array(
+                        array( 'maxlength', 255 ),
                         array( 'optional' ),
                 ),
 
-                'token' => array(
-                        array( 'maxlength', 100 ),
+                'img_path' => array(
+                        array( 'maxlength', 200 ),
                         array( 'optional' ),
                 ),
 
