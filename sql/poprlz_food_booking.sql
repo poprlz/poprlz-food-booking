@@ -4,7 +4,7 @@ Source Host: 127.0.0.1
 Source Database: poprlz_food_booking
 Target Host: 127.0.0.1
 Target Database: poprlz_food_booking
-Date: 2012/9/27 23:28:46
+Date: 2012/9/28 0:03:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,6 +23,65 @@ CREATE TABLE `catalog` (
   `last_updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `catalog_name_index` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product
+-- ----------------------------
+CREATE TABLE `product` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL DEFAULT '0',
+  `title` varchar(200) NOT NULL,
+  `img_path` char(200) NOT NULL,
+  `description` longtext,
+  `price` decimal(10,0) NOT NULL,
+  `status` char(10) NOT NULL DEFAULT 'active',
+  `date_created` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_title_index` (`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_catalog
+-- ----------------------------
+CREATE TABLE `product_catalog` (
+  `catalog_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  UNIQUE KEY `product_catalog_index` (`catalog_id`,`product_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_image
+-- ----------------------------
+CREATE TABLE `product_image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL DEFAULT '0',
+  `product_id` bigint(20) NOT NULL,
+  `img_path` char(200) NOT NULL,
+  `alt` char(200) DEFAULT NULL,
+  `status` char(10) NOT NULL DEFAULT 'active',
+  `date_created` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for product_option
+-- ----------------------------
+CREATE TABLE `product_option` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `version` bigint(20) NOT NULL DEFAULT '0',
+  `product_id` bigint(20) NOT NULL,
+  `option_code` char(20) NOT NULL,
+  `name` char(200) NOT NULL,
+  `value` tinytext NOT NULL,
+  `price` decimal(10,0) NOT NULL DEFAULT '0',
+  `status` char(10) NOT NULL DEFAULT 'active',
+  `date_created` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_option_code_index` (`option_code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
