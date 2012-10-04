@@ -79,5 +79,35 @@ $route['*']['/gen_site'] = array('MainController', 'gen_site', 'authName'=>'DooP
 //generate Models automatically
 $route['*']['/gen_model'] = array('MainController', 'gen_model', 'authName'=>'DooPHP Admin', 'auth'=>$admin, 'authFail'=>'Unauthorized!');
 
+/**Begin:用户URL ROUTE配置***/
+$route['*']['/user/index.html'] = array('UserAccountController', 'index');
+$route['post']['/user/auth.html'] = array('UserAccountController', 'auth_account');
+$route['post']['/user/register.html'] = array('UserAccountController', 'register_account');
+$route['*']['/user/user.html'] = array('UserController', 'index');
+$route['*']['/user/save.html'] = array('UserController', 'save');
+
+ 
+
+/**End:用户URL ROUTE配置***/
+
+/**Begin:目录管理URL ROUTE配置***/
+$route['*']['/admin/catalog/index.html'] = array('CatalogController', 'index');
+$route['*']['/admin/catalog/create.html'] = array('CatalogController', 'create');
+$route['post']['/admin/catalog/save.html'] = array('CatalogController', 'save');
+$route['get']['/admin/catalog/edit.html'] = array('CatalogController', 'edit');
+$route['post']['/admin/catalog/update.html'] = array('CatalogController', 'update');
+$route['get']['/admin/catalog/remove.html'] = array('CatalogController', 'remove');
+/**Begin:目录管理URL ROUTE配置***/
+
+
+/**Begin:目录管理URL ROUTE配置***/
+$route['*']['/admin/product/index.html'] = array('ProductController', 'index');
+$route['*']['/admin/product/create.html'] = array('ProductController', 'create');
+$route['post']['/admin/product/save.html'] = array('ProductController', 'save');
+$route['get']['/admin/product/edit.html'] = array('ProductController', 'edit');
+$route['post']['/admin/product/update.html'] = array('ProductController', 'update');
+$route['get']['/admin/product/remove.html'] = array('ProductController', 'remove');
+/**Begin:目录管理URL ROUTE配置***/
+
 
 ?>
