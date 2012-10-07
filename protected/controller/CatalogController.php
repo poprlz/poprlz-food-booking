@@ -83,7 +83,7 @@ class CatalogController extends DooController {
 
         $v = new DooValidator();
 
-      
+      /**
         if ($error = $v->validate($catalogInstance, $catalogInstance->getVRules())) {
 
 
@@ -98,7 +98,7 @@ class CatalogController extends DooController {
             $this->renderc('/admin/catalog/create', $data);
             return;
         }
-
+        **/
         $catalogInstance->status = 'active';
         $catalogInstance->date_created = date('Y-m-d H:i:s', time());
         $catalogInstance->last_updated = date('Y-m-d H:i:s', time());
@@ -107,7 +107,7 @@ class CatalogController extends DooController {
         
         $message->addMessage("已经成功保存目录信息");
         $url=Doo::conf()->APP_URL . 'index.php/admin/catalog/edit.html?id='.$catalogInstance->id;
-        http_redirect($url);
+        header('Location:'.$url);
         return;
     }
 
