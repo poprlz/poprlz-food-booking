@@ -3,6 +3,8 @@
 Doo::loadModel('Catalog');
 Doo::loadHelper('DooValidator');
 Doo::loadHelper('DooUrlBuilder');
+Doo::loadClass('helper/ArrayToModelHelper');
+Doo::loadHelper('DooFlashMessenger');
 
 class CatalogController extends DooController {
 
@@ -59,15 +61,21 @@ class CatalogController extends DooController {
     }
 
     function save() {
+
+        $message=new DooFlashMessenger();
         
-        $parent_id = 0;
-        if (isset($_POST['parent_id'])) {
-            $parent_id = $_POST['parent_id'];
-        }
         
+
         $catalogInstance = new Catalog;
 
-        $catalogInstance->parent_id = $parent_id;
+        $arrayToModelHelper = new ArrayToModelHelper();
+
+        $catalogInstance = $arrayToModelHelper->array_to_model($catalogInstance, $_POST);
+
+
+
+        $v = new DooValidator();
+
 
 
 
@@ -75,22 +83,32 @@ class CatalogController extends DooController {
 
         $v = new DooValidator();
 
-        $validate_rules = array(
-            'name' => array('email', '请正确输入邮件地址！'),
-            'description' => array('description', 6, 200, '密码支持数字，字母与下划线！'),
-            'img_path' => array('img_path', 6, 200, '密码支持数字，字母与下划线！'),
-        );
-
-        if ($error = $v->validate($_POST, $validate_rules)) {
+      
+        if ($error = $v->validate($catalogInstance, $catalogInstance->getVRules())) {
 
 
             Doo::logger()->info('用户登录输入的数据验证失败!');
+            
+            foreach ($error as $errorMessage){
+                $message->addMessage($errorMessage);
 
-            $data['form_error'] = $error;
-            $this->renderc('user/index', $data, true);
+            }
+            
+            $data['message'] = $message;
+            $this->renderc('/admin/catalog/create', $data);
             return;
         }
- 
+
+        $catalogInstance->status = 'active';
+        $catalogInstance->date_created = date('Y-m-d H:i:s', time());
+        $catalogInstance->last_updated = date('Y-m-d H:i:s', time());
+        $catalogInstance->insert();
+        $catalogInstance->id=$catalogInstance->lastInsertId();
+        
+        $message->addMessage("已经成功保存目录信息");
+        $url=Doo::conf()->APP_URL . 'index.php/admin/catalog/edit.html?id='.$catalogInstance->id;
+        http_redirect($url);
+        return;
     }
 
     function update() {
