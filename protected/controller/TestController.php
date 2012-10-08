@@ -12,6 +12,11 @@ class TestController extends DooController{
 		 $arrayToModelHelper->array_to_model($user,array('version'=>23));
 		 
     }
+    
+    public function ckedit(){
+        $data=array();
+        $this->renderc('/test/index', $data);
+    }
 	
 	 
 

@@ -110,4 +110,7 @@ $route['get']['/admin/product/remove.html'] = array('ProductController', 'remove
 /**Begin:目录管理URL ROUTE配置***/
 
 
+$route['*']['/test/ckedit'] = array('TestController', 'ckedit');
+
+
 ?>
