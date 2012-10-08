@@ -53,7 +53,20 @@ class CatalogController extends DooController {
     }
 
     function edit() {
-        echo 'You are visiting ' . $_SERVER['REQUEST_URI'];
+        $data['root_url'] = Doo::conf()->APP_URL . 'index.php';
+       //$catalogInstance = new Catalog;
+       
+       $option=array('id'=>$_GET['id']);
+       
+       $catalogInstance=Catalog::_getOne(NULL, $option);
+
+        
+
+
+
+        $data['catalogInstance'] = $catalogInstance;
+
+        $this->renderc('/admin/catalog/edit', $data);
     }
 
     function remove() {

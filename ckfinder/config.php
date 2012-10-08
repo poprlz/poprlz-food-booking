@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ### CKFinder : Configuration File - Basic Instructions
  *
@@ -30,7 +31,7 @@ function CheckAuthentication()
 	// user logs in your system. To be able to use session variables don't
 	// forget to add session_start() at the top of this file.
 
-	return false;
+	return true;
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be
@@ -60,7 +61,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/ckfinder/userfiles/';
+
+$baseUrl ='http://127.0.0.1/poprlz-food-booking/upload/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -79,7 +81,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = resolveUrl($baseUrl);
+$baseDir = dirname(__FILE__).'/../upload/';
 
 /*
  * ### Advanced Settings
