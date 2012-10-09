@@ -19,11 +19,13 @@
                 <?php foreach ($data['productInstanceList'] as $productInstance) {?>
                 <tr>
                    
-                    <td><?php echo $productInstance->name; ?></td>
+                    <td><?php echo $productInstance->title; ?></td>
                
-                    <td><?php echo $productInstance->description; ?></td>
+                    <td><?php echo $productInstance->price; ?></td>
              
                     <td><?php echo $productInstance->img_path; ?></td>
+                    
+                     <td><?php echo $productInstance->quantity; ?></td>
                 
                     <td>
                         <a href="<?php echo $data['root_url'].'/admin/product/edit.html?id='.$productInstance->id;?>">edit</a>

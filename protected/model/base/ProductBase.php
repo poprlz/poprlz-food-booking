@@ -32,6 +32,11 @@ class ProductBase extends DooModel{
      * @var decimal Max length is 10. ,0).
      */
     public $price;
+    
+    /**
+     * @var int Max length is 11.
+     */
+    public $quantity;
 
     /**
      * @var char Max length is 10.
@@ -50,7 +55,7 @@ class ProductBase extends DooModel{
 
     public $_table = 'product';
     public $_primarykey = 'id';
-    public $_fields = array('id','version','title','img_path','description','price','status','date_created','last_updated');
+    public $_fields = array('id','version','title','img_path','description','price','quantity','status','date_created','last_updated');
 
     public function getVRules() {
         return array(
@@ -82,6 +87,11 @@ class ProductBase extends DooModel{
 
                 'price' => array(
                         array( 'float' ),
+                        array( 'notnull' ),
+                ),
+                'quantity' => array(
+                        array( 'integer' ),
+                        array( 'maxlength', 11 ),
                         array( 'notnull' ),
                 ),
 
