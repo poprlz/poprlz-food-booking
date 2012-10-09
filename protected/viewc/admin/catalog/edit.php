@@ -26,16 +26,12 @@
                     <td><input type="text" name="img_path" value="<?php echo $catalogInstance->img_path; ?>"></td>
                 </tr>    
                 <tr>
-                    <td colspan="2"><input type="submit" value="submit"/></td>
-                    
+                    <td><input type="submit" value="submit"/></td>
+                    <td><a href="<?php echo $data['root_url'].'/admin/catalog/remove.html?id='.$catalogInstance->id;?>">remove</a></td>
                 </tr> 
             </table>
-            
-             
-            
-            
- 
-
         </form>   
+        
+         
     </body>
 </html>

@@ -9,25 +9,23 @@ Doo::loadHelper('DooFlashMessenger');
 class CatalogController extends DooController {
 
     function index() {
-        $catalogInstance = new Catalog();
-        //$catalogInstance->index_children_catalog();
-
+        
+        $data['root_url'] = Doo::conf()->APP_URL . 'index.php';
+        
+        $catalogInstance = new Catalog();        
 
         $catalogInstanceList = $catalogInstance->index_all_catalog();
-        echo '<br/>--------------------------------------------------------------------------<br/>';
-
-        foreach ($catalogInstanceList as $var_catalog) {
-
-            echo '<br/>id=' . $var_catalog->id;
-            echo '<br/>parent_id=' . $var_catalog->parent_id;
-            echo '<br/>name=' . $var_catalog->name;
-            echo '<br/>--------------------------------------------------------------------------<br/>';
-        }
+        $data['catalogInstanceList']=$catalogInstanceList;
+        $this->renderc('/admin/catalog/list', $data);
+       
+         
+          
+         
 
 
-        echo $this->toJSON($catalogInstanceList);
+        //echo $this->toJSON($catalogInstanceList);
 
-        echo $this->toXML($catalogInstanceList);
+        //echo $this->toXML($catalogInstanceList);
     }
 
     function create() {
@@ -54,11 +52,12 @@ class CatalogController extends DooController {
 
     function edit() {
         $data['root_url'] = Doo::conf()->APP_URL . 'index.php';
-       //$catalogInstance = new Catalog;
+       $catalogInstance = new Catalog;
        
-       $option=array('id'=>$_GET['id']);
+       $option=array('where'=>'id='.$_GET['id']);
        
-       $catalogInstance=Catalog::_getOne(NULL, $option);
+       $catalogInstance=$catalogInstance->getOne($option);
+       //var_dump($catalogInstance);
 
         
 
@@ -70,7 +69,18 @@ class CatalogController extends DooController {
     }
 
     function remove() {
-        echo 'You are visiting ' . $_SERVER['REQUEST_URI'];
+         $message=new DooFlashMessenger();
+        $option=array('where'=>'id='.$_GET['id']);
+         
+        $catalogInstance = new Catalog;   
+       
+       
+        $catalogInstance->delete($option);
+       
+        $message->addMessage("已经成功删除目录信息");
+        $url=Doo::conf()->APP_URL . 'index.php/admin/catalog/index.html';
+        header('Location:'.$url);
+        return;
     }
 
     function save() {
@@ -125,7 +135,58 @@ class CatalogController extends DooController {
     }
 
     function update() {
-        echo 'You are visiting ' . $_SERVER['REQUEST_URI'];
+        $message=new DooFlashMessenger();
+        
+        
+
+      $option=array('where'=>'id='.$_POST['id']);
+       
+         $catalogInstance = new Catalog;
+       
+       
+       
+       $catalogInstance=$catalogInstance->getOne($option);
+
+        $arrayToModelHelper = new ArrayToModelHelper();
+
+        $catalogInstance = $arrayToModelHelper->array_to_model($catalogInstance, $_POST);
+
+
+
+        $v = new DooValidator();
+
+
+
+
+        
+
+        $v = new DooValidator();
+
+      /**
+        if ($error = $v->validate($catalogInstance, $catalogInstance->getVRules())) {
+
+
+            Doo::logger()->info('用户登录输入的数据验证失败!');
+            
+            foreach ($error as $errorMessage){
+                $message->addMessage($errorMessage);
+
+            }
+            
+            $data['message'] = $message;
+            $this->renderc('/admin/catalog/create', $data);
+            return;
+        }
+        **/
+
+        $catalogInstance->last_updated = date('Y-m-d H:i:s', time());
+        $catalogInstance->update();
+
+        $data['catalogInstance'] = $catalogInstance;
+        $message->addMessage("已经成功保存目录信息");
+        $url=Doo::conf()->APP_URL . 'index.php/admin/catalog/edit.html?id='.$catalogInstance->id;
+        header('Location:'.$url);
+        return;
     }
 
 }
