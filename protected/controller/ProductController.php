@@ -1,5 +1,7 @@
 <?php
+Doo::loadModel('Catalog');
 Doo::loadModel('Product');
+Doo::loadModel('ProductCatalog');
 Doo::loadHelper('DooValidator');
 Doo::loadHelper('DooUrlBuilder');
 Doo::loadClass('helper/ArrayToModelHelper');
@@ -151,11 +153,7 @@ class ProductController extends DooController {
         $v = new DooValidator();
 
 
-
-
-        
-
-        $v = new DooValidator();
+ 
 
       /**
         if ($error = $v->validate($productInstance, $productInstance->getVRules())) {
@@ -183,6 +181,28 @@ class ProductController extends DooController {
         header('Location:'.$url);
         return;
     }
+    
+    public function edit_catalog(){
+        
+        $data['root_url'] = Doo::conf()->APP_URL . 'index.php';
+        
+        $catalogInstance = new Catalog();        
 
+        $catalogInstanceList = $catalogInstance->index_all_catalog();
+        $data['catalogInstanceList']=$catalogInstanceList;
+        
+        $productCatalog = new ProductCatalog();
+        $options['where'] = 'product_id=' . $_GET['product_id'];
+        $productCatalogInstanceList = $productCatalog->find($options);
+        $data['productCatalogInstanceList']=$productCatalogInstanceList;
+        $this->renderc('/admin/product/editProductCatalog', $data);
+        
+    }
+
+    
+    
+    public function save_catalog(){
+        
+    }    
 }
 ?>

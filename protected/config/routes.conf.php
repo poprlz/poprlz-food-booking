@@ -107,6 +107,8 @@ $route['post']['/admin/product/save.html'] = array('ProductController', 'save');
 $route['get']['/admin/product/edit.html'] = array('ProductController', 'edit');
 $route['post']['/admin/product/update.html'] = array('ProductController', 'update');
 $route['get']['/admin/product/remove.html'] = array('ProductController', 'remove');
+$route['post']['/admin/product/saveCatalog.html'] = array('ProductController', 'save_catalog');
+$route['get']['/admin/product/editCatalog.html'] = array('ProductController', 'edit_catalog');
 /**Begin:目录管理URL ROUTE配置***/
 
 
