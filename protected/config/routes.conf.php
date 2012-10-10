@@ -109,8 +109,12 @@ $route['post']['/admin/product/update.html'] = array('ProductController', 'updat
 $route['get']['/admin/product/remove.html'] = array('ProductController', 'remove');
 $route['post']['/admin/product/saveCatalog.html'] = array('ProductController', 'save_catalog');
 $route['get']['/admin/product/editCatalog.html'] = array('ProductController', 'edit_catalog');
-/**Begin:目录管理URL ROUTE配置***/
+/**End:目录管理URL ROUTE配置***/
 
+
+/***Begin:产品展示***/
+$route['*']['/catalog/products.html'] = array('CatalogProductController', 'index');
+/***End:产品展示***/
 
 $route['*']['/test/ckedit'] = array('TestController', 'ckedit');
 
