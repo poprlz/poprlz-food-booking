@@ -9,7 +9,7 @@ class ProductCatalog extends ProductCatalogBase {
 
         $productCatalog = new ProductCatalog();
         $options['where'] = 'product_id=' . $product_id;
-        $productCatalog->delete($opt);
+        $productCatalog->delete($options);
         $productCatalog->product_id = $product_id;
         foreach ($catalog_id_arrays as $catalog_id) {
             $productCatalog->catalog_id = $catalog_id;
