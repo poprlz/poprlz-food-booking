@@ -15,20 +15,30 @@ class CatalogProductController extends DooController {
         
         //echo strpos('adddd','dd');
 
-        //$catalog=new Catalog();
-        //$catalogInstance=$catalog->get_catalog($_GET['id']);
+        $catalog=new Catalog();
+        $catalogInstance=$catalog->get_catalog($_GET['id']);
+        
+        $page =1;
+        if(isset($_GET['pindex'])){
+            $page =$_GET['pindex'];
+        }
+        
+        
+        $productCatalog =new ProductCatalog;
 
-        $page =2;// $this->params['pindex'];
-        $total =35;
-        $pager = new PaginationHelper(Doo::conf()->APP_URL . 'main/gallery',NULL, $total, 6, 10);
-
+        $options['where']="id=".$catalogInstance->id;
+        $total =$productCatalog->count($options);
+        
+        $params= array('id'=>$catalog->id);
+        $pager = new PaginationHelper(Doo::conf()->APP_URL . 'index.php//catalog/products.html',$params, $total, 16);
+        $pager->paginate($page);
         #change the text of next/prev
         //$pager->prevText = 'prev';
         //$pager->nextText = 'next';
         #If you don't need the next/prev links
         //$pager->noNextPrev();
         #Do the pagination
-        $pager->paginate($page);
+        
 
         $limit = $pager->limit;
         //Doo::db()->find('User', array('limit' => $limit));

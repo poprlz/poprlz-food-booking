@@ -211,24 +211,22 @@ a:hover .paginate{
         $this->_link = $this->baseUrl;
 
 
+
+
+        //TODO MODIFY
+        if (!empty($this->requestParams)) {
+            if (strpos($this->_link, "?")) {
+                $this->_link = $this->_link . '&';
+            } else {
+                $this->_link = $this->_link . '?';
+            }
+            $this->_link = $this->_link . http_build_query($this->requestParams);
+        }
+
         if (strpos($this->_link, "?")) {
             $this->_link = $this->_link . '&';
         } else {
             $this->_link = $this->_link . '?';
-        }
-
-        //TODO MODIFY
-        if (empty($this->requestParams)) {
-
-            $index = 0;
-            foreach ($this->requestParams as $key => $value) {
-                if ($index == 0) {
-                    $this->_link = $this->_link . '&' . $key . '=' . $value;
-                } else {
-                    $this->_link = $this->_link . '&' . $key . '=' . $value;
-                }
-                $index++;
-            }
         }
     }
 
